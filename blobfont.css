@@ -1,0 +1,275 @@
+body {
+    margin: 0;
+}
+
+blobfont {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    --var-background: black;
+    --var-height: 80px;
+}
+
+.letter {
+    --var-width: calc(var(--var-height) * 3 / 4);
+
+    position: relative;
+    background: var(--var-background);
+    width: var(--var-width);
+    height: var(--var-height);
+    transition: 1s;
+    margin: 4px;
+}
+
+.blob {
+    --var-size: calc(var(--var-width) / 3);
+    width: var(--var-size);
+    height: var(--var-size);
+    position: absolute;
+    left: calc(50% - var(--var-size)/2);
+    top: calc(50% - var(--var-size)/2);
+    background: white;
+    transition: 1s;
+    opacity: 1;
+    z-index: 2;
+    transform: none;
+}
+
+/* letters */
+
+
+/* top  -------------------------------------------------------------- */
+
+.h .b1,
+.k .b1,
+.l .b1,
+.n .b1,
+.r .b1,
+.u .b1,
+.v .b1,
+.w .b1,
+.w .b2,
+.y .b1 {
+    /* top 0 */
+    top: 0;
+}
+
+.b .b1,
+.e .b1,
+.z .b1 {
+    /* top small */
+    top: calc(var(--var-height) / 6);
+}
+
+.g .b1 {
+    /* top 5/16 */
+    top: calc(var(--var-height) * 5 / 16);
+}
+
+.a .b1,
+.f .b1,
+.j .b1,
+.l .b2,
+.p .b1,
+.s .b1,
+.u .b2,
+.v .b2 {
+    /* top full */
+    top: calc(var(--var-size));
+}
+
+.s .b2,
+.j .b2,
+.s .b2 {
+    /* bottom full */
+    top: calc(var(--var-size) * 2);
+}
+
+.g .b2 {
+    /* bottom 3/16 */
+    top: calc(var(--var-height) * 9 / 16);
+}
+
+.b .b2,
+.e .b2,
+.z .b2 {
+    /* bottom small */
+    top: calc(var(--var-height) * 7 / 12);
+}
+
+.a .b2,
+.f .b2,
+.h .b2,
+.k .b2,
+.m .b1,
+.m .b2,
+.n .b2,
+.p .b2,
+.r .b2,
+.t .b1,
+.t .b2,
+.y .b2,
+.dot .b2 {
+    /* bottom 0 */
+    top: calc(var(--var-height) - var(--var-size));
+}
+
+.q .b2 {
+    /* bottom -25% */
+    top: calc(var(--var-height) - var(--var-size) * 3 / 4);
+}
+
+/* ------------------------------------------------------------------- */
+
+/* left -------------------------------------------------------------- */
+
+.i .b1,
+.j .b1,
+.j .b2,
+.t .b1,
+.s .b2,
+.t .b1,
+.y .b2,
+.z .b1 {
+    /* left 0 */
+    left: 0;
+}
+
+.m .b1,
+.w .b1 {
+    /* left tiny */
+    left: calc(var(--var-width) / 9);
+}
+
+.d .b1,
+.d .b2 {
+    /* left small */
+    left: calc(var(--var-height) / 6);
+}
+
+.n .b2 {
+    /* left big */
+    left: calc(var(--var-width) / 2 - var(--var-size));
+}
+
+.n .b1 {
+    /* right big */
+    left: calc(var(--var-width) / 2);
+}
+
+.b .b1,
+.b .b2{
+    /* right small */
+    left: calc(var(--var-width) - var(--var-height) * 5 / 12);
+}
+
+.m .b2,
+.w .b2 {
+    /* right tiny */
+    left: calc(var(--var-width) * 5 / 9)
+}
+
+.c .b1,
+.c .b2,
+.e .b1,
+.e .b2,
+.f .b1,
+.f .b2,
+.i .b2,
+.k .b2,
+.l .b1,
+.l .b2,
+.p .b2,
+.r .b1,
+.s .b1,
+.t .b2,
+.z .b2 {
+    /* right 0 */
+    left: calc(var(--var-width) - var(--var-size));
+}
+
+.q .b2 {
+    /* right -25% */
+    left: calc(var(--var-width) - var(--var-size) * 3 / 4);
+}
+/* ------------------------------------------------------------------- */
+
+.g .b1 {
+    width: calc(var(--var-size) * 2);
+}
+
+.q .b2 {
+    background: var(--var-background);
+}
+
+/* X */
+
+.x .b1 {
+    transform: rotate(45deg);
+    left: calc(var(--var-size) / -2);
+    background: linear-gradient(45deg, transparent 50%, white 50%);
+}
+
+.x .b2 {
+    transform: rotate(45deg);
+    left: calc(var(--var-width) - var(--var-size) / 2);
+    background: linear-gradient(45deg, white 50%, transparent 50%);
+}
+
+/* Empty letter */
+
+.new .b1 {
+    top: 0;
+    left: 0;
+    width: var(--var-width);
+    height: calc(var(--var-height) / 2);
+}
+
+.new .b2 {
+    top: calc(var(--var-height) / 2);
+    left: 0;
+    width: var(--var-width);
+    height: calc(var(--var-height) / 2);
+}
+
+/* special chars */
+
+.dot .b1 {
+    top: 0;
+    left: 0;
+    width: var(--var-width);
+    height: calc(var(--var-height) - var(--var-size));
+}
+
+.dot .b2 {
+    left: var(--var-size);
+    width: calc(var(--var-width) - var(--var-size));
+}
+
+.dash .b1 {
+    left: 0;
+    top: 0;
+    width: var(--var-width);
+    height: calc(calc(var(--var-height) - var(--var-size)) / 2);
+}
+
+.dash .b2 {
+    left: 0;
+    top: calc(calc(var(--var-height) + var(--var-size)) / 2);
+    width: var(--var-width);
+    height: calc(calc(var(--var-height) - var(--var-size)) / 2);
+}
+
+.underline .b1 {
+    left: 0;
+    top: 0;
+    width: var(--var-width);
+    height: calc(calc(var(--var-height) - var(--var-size)) / 2);
+}
+
+.underline .b2 {
+    left: 0;
+    top: calc(calc(var(--var-height) - var(--var-size)) / 2);
+    width: var(--var-width);
+    height: calc(calc(var(--var-height) - var(--var-size)) / 2);
+}
