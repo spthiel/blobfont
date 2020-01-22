@@ -18,3 +18,26 @@ let font = blobfont.create(<dom>,[size],[color]);
 // delay defaults to 100 and is the amount of ms between the drawing of each character
 font.setText(<text>,[delay])
 ```
+
+## Modifying existing blobfonts
+1. Get blobfont node
+2. Get object
+```js
+let font = blobfont.get(node);
+```
+3. setText, setColor, setSize
+```js
+// Changes text
+font.setText(<text>,[delay]);
+// Changes color
+font.setColor([foreground color], [background color]);
+// Changes size
+font.setSize(<size in px>);
+```
+
+## Removing blobfonts
+1. Get blobfont object as above
+2. Delete
+```
+font.remove();
+```
