@@ -7,6 +7,7 @@ blobfont {
     flex-wrap: wrap;
     align-content: flex-start;
     --var-background: black;
+    --var-squares: white;
     --var-height: 80px;
 }
 
@@ -28,7 +29,7 @@ blobfont {
     position: absolute;
     left: calc(50% - var(--var-size)/2);
     top: calc(50% - var(--var-size)/2);
-    background: white;
+    background: var(--var-squares);
     transition: 1s;
     opacity: 1;
     z-index: 2;
@@ -272,4 +273,16 @@ blobfont {
     top: calc(calc(var(--var-height) - var(--var-size)) / 2);
     width: var(--var-width);
     height: calc(calc(var(--var-height) - var(--var-size)) / 2);
+}
+
+.exclamation .b1 {
+    left: var(--var-size);
+    top: 0;
+    width: calc(var(--var-width) - var(--var-size));
+    height: var(--var-height);
+}
+
+.exclamation .b2 {
+    left: 0;
+    top: calc(var(--var-height) / 2);
 }
