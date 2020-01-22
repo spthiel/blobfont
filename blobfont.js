@@ -1,22 +1,53 @@
 class Blobfont {
     
+    /**
+     * Creates the API class.
+     * Don't use this constructor, use the global var blobfont instead
+     */
     constructor() {
         this.index = 0;
         this.blobfonts = [];
     }
 
-    create(dom, size, color) {
-        let text = new BlobfontText(this.index++, size, color);
+    /**
+     * @param {Node} dom The node supposed to contain the blobfont object
+     * @param {number} size Height in px
+     * @param {string} color font color
+     * @param {string} bgcolor background color
+     */
+    create(dom, size, color, bgcolor) {
+        let text = new BlobfontText(this.blobfonts.length, size, color, bgcolor);
         blobfont.blobfonts.push(text);
         dom.appendChild(text.getDom());
         return text;
+    }
+
+    /**
+     * @param {Node} dom the blobfont node
+     */
+    get(dom) {
+        if(typeof dom == "number") {
+            return this.blobfonts[dom];
+        }
+        if(!dom.hasAttribute("index")) {
+            return undefined;
+        }
+        return this.blobfonts[dom.getAttribute("index")];
     }
 
 }
 
 class BlobfontText {
 
-    constructor(index, size, color) {
+    /**
+     * Represents a fontobject
+     * @param {number} index Index of the node in the array
+     * @param {number} size Height in px
+     * @param {string} color font color
+     * @param {string} bgcolor background color
+     */
+    constructor(index, size, color, bgcolor) {
+        this.bgcolor = bgcolor || "white";
         this.color = color || "black";
         if(size && (size + "").match(/^[0-9]+$/g)) {
             this.size = size + "px";
@@ -28,17 +59,34 @@ class BlobfontText {
         this.text.className = "blobfont" + index;
         this.text.setAttribute("index", index++);
         this.text.style.setProperty("--var-background", this.color);
+        this.text.style.setProperty("--var-squares", this.bgcolor);
         this.text.style.setProperty("--var-height", this.size);
     }
 
+    /**
+     * @param {string} char Single letter string
+     * @return {boolean} Wether the char is accepted in blobfonts
+     */
     accept(char) {
-        if(char.match(/^[a-zA-Z ._-]$/)) {
+        if(char.match(/^[a-zA-Z !._-]$/)) {
             return true;
         } else {
             return false;
         }
     }
 
+    /**
+     * Removes the node
+     */
+    remove() {
+        this.text.parentElement.removeChild(this.text);
+    }
+
+    /**
+     * Translates single characters into class names for nodes
+     * @param {string} char Single letter string
+     * @return {string} Sanitized class name
+     */
     translate(char) {
         switch(char) {
             case ".":
@@ -49,16 +97,59 @@ class BlobfontText {
                 return "dash";
             case " ":
                 return "new";
+            case "!":
+                return "exclamation";
             default:
                 return char;
         }
     }
 
+    /**
+     * @return {Node} The Node of the blobfont
+     */
     getDom() {
         return this.text;
     }
 
+    /**
+     * @return {number} Height of the blobfont
+     */
+    getSize() {
+        return this.size;
+    }
+
+    /**
+     * @param {number} size The new height of the font
+     */
+    setSize(size) {
+        if(size && (size + "").match(/^[0-9]+$/g)) {
+            this.size = size + "px";
+        } else {
+            this.size = size && size.endsWith("px") ? size : "80px";
+        }
+        this.text.style.setProperty("--var-height", this.size);
+    }
+
+    /**
+     * @param {string} color font color
+     * @param {string} bgcolor background color
+     */
+    setColor(color, bgcolor) {
+        this.bgcolor = bgcolor || "white";
+        this.color = color || "black";
+        this.text.style.setProperty("--var-background", this.color);
+        this.text.style.setProperty("--var-squares", this.bgcolor);
+    }
+
+    /**
+     * Changes the active text
+     * @param {string} text The new text of the element
+     * @param {number} timing The delay between each modified/added letter - 100 by default
+     */
     setText(text, timing) {
+        if(!text) {
+            return;
+        }
         if(!timing) {
             timing = 100;
         }
@@ -67,6 +158,7 @@ class BlobfontText {
     }
 
     /**
+     * Recursively travels through the letters
      * @param {string[]} text The text
      * @param {number} timing Delay between letters
      * @param {number} current Current char leave blank on first call
@@ -103,6 +195,10 @@ class BlobfontText {
         }
     }
 
+    /**
+     * Builds nodes for a letter
+     * @return {Node} main node of a letter
+     */
     buildLetter() {
         let dom = document.createElement("div");
         let blob1 = document.createElement("div");
