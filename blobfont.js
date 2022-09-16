@@ -5,15 +5,25 @@ class Blobfont {
      * Don't use this constructor, use the global var blobfont instead
      */
     constructor() {
+        /**
+         * @private
+         * @type {number}
+         */
         this.index = 0;
+        /**
+         * @private
+         * @type {BlobfontText[]}
+         */
         this.blobfonts = [];
     }
 
     /**
+     * @public
      * @param {Node} dom The node supposed to contain the blobfont object
      * @param {number?} size Height in px
      * @param {string?} color font color
      * @param {string?} bgcolor background color
+     * @return {BlobfontText}
      */
     create(dom, size, color, bgcolor) {
         let text = new BlobfontText(this.blobfonts.length, size, color, bgcolor);
@@ -23,7 +33,8 @@ class Blobfont {
     }
 
     /**
-     * @param {Node} dom the blobfont node
+     * @param {Node|number} dom the blobfont node
+     * @return {BlobfontText|undefined}
      */
     get(dom) {
         if(typeof dom == "number") {
@@ -64,18 +75,16 @@ class BlobfontText {
     }
 
     /**
+     * @private
      * @param {string} char Single letter string
      * @return {boolean} Wether the char is accepted in blobfonts
      */
     accept(char) {
-        if(char.match(/^[a-zA-Z !._-]$/)) {
-            return true;
-        } else {
-            return false;
-        }
+        return !!char.match(/^[a-zA-Z !._-]$/);
     }
 
     /**
+     * @public
      * Removes the node
      */
     remove() {
@@ -83,6 +92,7 @@ class BlobfontText {
     }
 
     /**
+     * @private
      * Translates single characters into class names for nodes
      * @param {string} char Single letter string
      * @return {string} Sanitized class name
@@ -105,6 +115,7 @@ class BlobfontText {
     }
 
     /**
+     * @public
      * @return {Node} The Node of the blobfont
      */
     getDom() {
@@ -112,6 +123,7 @@ class BlobfontText {
     }
 
     /**
+     * @public
      * @return {number} Height of the blobfont
      */
     getSize() {
@@ -119,7 +131,8 @@ class BlobfontText {
     }
 
     /**
-     * @param {number} size The new height of the font
+     * @public
+     * @param {number|string} size The new height of the font
      */
     setSize(size) {
         if(size && (size + "").match(/^[0-9]+$/g)) {
@@ -131,8 +144,9 @@ class BlobfontText {
     }
 
     /**
-     * @param {string} color font color
-     * @param {string} bgcolor background color
+     * @public
+     * @param {string?} color font color
+     * @param {string?} bgcolor background color
      */
     setColor(color, bgcolor) {
         this.bgcolor = bgcolor || "white";
@@ -142,6 +156,7 @@ class BlobfontText {
     }
 
     /**
+     * @public
      * Changes the active text
      * @param {string} text The new text of the element
      * @param {number?} timing The delay between each modified/added letter - 100 by default
@@ -158,6 +173,7 @@ class BlobfontText {
     }
 
     /**
+     * @private
      * Recursively travels through the letters
      * @param {string[]} text The text
      * @param {number} timing Delay between letters
@@ -167,7 +183,7 @@ class BlobfontText {
         if(!current) {
             current = 0;
         }
-        if(text.length == current) {
+        if(text.length === current) {
             for(let i = this.letters.length-1; i >= current ; i--) {
                 this.letters[i].className = "letter new";
                 let letter = this.letters[i];
@@ -188,7 +204,7 @@ class BlobfontText {
         let dom = this.letters[current] || this.buildLetter();
         setTimeout(() => {dom.className = "letter " + letter}, 100);
 
-        if(timing > 0 && letter != "new") {
+        if(timing > 0 && letter !== "new") {
             setTimeout(() => {this.nextLetter(text, timing, current+1)}, timing)
         } else {
             this.nextLetter(text, timing, current+1);
@@ -196,6 +212,7 @@ class BlobfontText {
     }
 
     /**
+     * @private
      * Builds nodes for a letter
      * @return {Node} main node of a letter
      */
@@ -215,4 +232,4 @@ class BlobfontText {
 
 }
 
-var blobfont = new Blobfont();
+const blobfont = new Blobfont();

@@ -1,28 +1,36 @@
-<html>
+<html lang="en-US">
     <head>
 
         <link rel="stylesheet" type="text/css" href="blobfont.css">
         <script type="text/javascript" src="blobfont.js"></script>
+        <title>Blobfont showcase</title>
     </head>
     <body>
 
         <script>
 			let texts = [
-				"This is an example blobfonttext",
-				"We can even animate it",
-				"and seamlessly go to the next one",
-				"Some special - characters. are supported too!",
-                "abcdefghijklmnopqrstuvwxyz._-!"
+				{text:"This is an example blobfonttext", color: "black", size: 60},
+				{text: "We can even animate it", color: "#123456", size: 60},
+				{text: "and seamlessly go to the next one", color: "#dc0460", size: 40},
+				{text: "Some special - characters. are supported too!", color: "#ff8000", size: 40},
+				{text: "abcdefghijklmnopqrstuvwxyz._-!", color: "black", size: 40}
 			];
 
-			const blobtext = blobfont.create(document.body);
+			const blobtext = blobfont.create(document.body, 30);
 			let i = 0;
-			blobtext.setText(texts[(i++)]);
+			apply(i++);
 			setInterval(() => {
 				if (i < texts.length) {
-					blobtext.setText(texts[(i++)]);
+					apply(i++);
 				}
 			}, 5000);
+
+			function apply(i) {
+				let element = texts[i];
+				blobtext.setText(element.text);
+				blobtext.setSize(element.size);
+				blobtext.setColor(element.color);
+            }
 
         </script>
     </body>
