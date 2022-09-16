@@ -15,8 +15,9 @@
                 "abcdefghijklmnopqrstuvwxyz._-!"
 			];
 
-			const blobtext = blobfont.create(document.body)
+			const blobtext = blobfont.create(document.body);
 			let i = 0;
+			blobtext.setText(texts[(i++)]);
 			setInterval(() => {
 				if (i < texts.length) {
 					blobtext.setText(texts[(i++)]);
