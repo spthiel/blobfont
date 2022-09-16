@@ -5,7 +5,24 @@
         <script type="text/javascript" src="blobfont.js"></script>
     </head>
     <body>
-    
-      <script>blobfont.create(document.body).setText("This is an example blobfonttext")</script>
+
+        <script>
+			let texts = [
+				"This is an example blobfonttext",
+				"We can even animate it",
+				"and seamlessly go to the next one",
+				"Some special - characters. are supported too!",
+                "abcdefghijklmnopqrstuvwxyz._-!"
+			];
+
+			const blobtext = blobfont.create(document.body)
+			let i = 0;
+			setInterval(() => {
+				if (i < texts.length) {
+					blobtext.setText(texts[(i++)]);
+				}
+			}, 5000);
+
+        </script>
     </body>
 </html>

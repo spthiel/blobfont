@@ -1,5 +1,5 @@
 class Blobfont {
-    
+
     /**
      * Creates the API class.
      * Don't use this constructor, use the global var blobfont instead
@@ -11,9 +11,9 @@ class Blobfont {
 
     /**
      * @param {Node} dom The node supposed to contain the blobfont object
-     * @param {number} size Height in px
-     * @param {string} color font color
-     * @param {string} bgcolor background color
+     * @param {number?} size Height in px
+     * @param {string?} color font color
+     * @param {string?} bgcolor background color
      */
     create(dom, size, color, bgcolor) {
         let text = new BlobfontText(this.blobfonts.length, size, color, bgcolor);
@@ -42,9 +42,9 @@ class BlobfontText {
     /**
      * Represents a fontobject
      * @param {number} index Index of the node in the array
-     * @param {number} size Height in px
-     * @param {string} color font color
-     * @param {string} bgcolor background color
+     * @param {number?} size Height in px
+     * @param {string?} color font color
+     * @param {string?} bgcolor background color
      */
     constructor(index, size, color, bgcolor) {
         this.bgcolor = bgcolor || "white";
@@ -144,7 +144,7 @@ class BlobfontText {
     /**
      * Changes the active text
      * @param {string} text The new text of the element
-     * @param {number} timing The delay between each modified/added letter - 100 by default
+     * @param {number?} timing The delay between each modified/added letter - 100 by default
      */
     setText(text, timing) {
         if(!text) {
@@ -154,7 +154,7 @@ class BlobfontText {
             timing = 100;
         }
         text = text.toLowerCase();
-        this.nextLetter(text.split(""), timing); 
+        this.nextLetter(text.split(""), timing);
     }
 
     /**
@@ -173,7 +173,7 @@ class BlobfontText {
                 let letter = this.letters[i];
                 let dom = this.text;
                 setTimeout(() => {
-                    dom.removeChild(letter)   
+                    dom.removeChild(letter)
                 }, 1000);
             }
             this.letters = this.letters.slice(0, current);
